@@ -73,7 +73,9 @@ window.onload = function() {
         //5.1首先让第一张图片显示，其余隐藏
         var index = 0;
         $(".slider>ul>li").eq(0).show().siblings().hide();
-        changeIndex();
+        $(".dots>a").eq(0).addClass("selected");
+
+        var timer = setInterval(autoPlay, 2000);
 
         //5.2监听上一张按钮的点击
         $(".slider-direction .prev").click(function() {
@@ -83,13 +85,13 @@ window.onload = function() {
                 index = $(".slider>ul>li").length - 1;
             }
             $(".slider>ul>li").eq(index).fadeIn();
-            changeIndex();
+            $(".dots>a").eq(index).addClass("selected").siblings().removeClass("selected");
         })
 
         //5.3监听下一张按钮的点击
         $(".slider-direction .next").click(function() {
             autoPlay();
-            changeIndex();
+            $(".dots>a").eq(index).addClass("selected").siblings().removeClass("selected");
         })
 
         //5.4自动轮播
@@ -100,23 +102,23 @@ window.onload = function() {
                 index = 0;
             }
             $(".slider>ul>li").eq(index).fadeIn();
-            changeIndex();
-        }
-
-        var timer = setInterval(autoPlay, 2000);
-
-        //5.5索引的改变
-        function changeIndex() {
             $(".dots>a").eq(index).addClass("selected").siblings().removeClass("selected");
         }
+
+
 
         //5.6索引圆点的点击
         $(".dots>a").click(function() {
             $(".slider>ul>li").eq(index).hide();
             index = $(this).index();
             $(".slider>ul>li").eq(index).fadeIn();
-            changeIndex();
+            $(".dots>a").eq(index).addClass("selected").siblings().removeClass("selected");
         })
+
+        //5.5索引的改变
+        // function changeIndex() {
+        //     $(".dots>a").eq(index).addClass("selected").siblings().removeClass("selected");
+        // }
 
         //5.7轮播定时器的清除与设置
         $(".slider").mouseenter(function() {
@@ -174,16 +176,17 @@ window.onload = function() {
             $(this).parents(".box-header").next().find("ul").eq($(this).index()).show().siblings().hide();
         })
         var cindex = 0;
+
         //9.内容轮播点击
         $(".next").click(function() {
             cindex++;
-            if (cindex == 3) {
+            if (cindex > 2) {
                 cindex = 2;
             }
             $(this).parents(".ctl").prev().prev().find("ul").animate({
                 marginLeft: [-256 * cindex, "swing"]
             }, 500);
-            changeIndex();
+            $(this).parents(".ctl").prev().find("li").eq(cindex).addClass("li-active").siblings().removeClass("li-active");
         })
 
         $(".prev").click(function() {
@@ -194,7 +197,7 @@ window.onload = function() {
             $(this).parents(".ctl").prev().prev().find("ul").animate({
                 marginLeft: [-256 * cindex, "swing"]
             }, 500);
-            changeIndex();
+            $(this).parents(".ctl").prev().find("li").eq(cindex).addClass("li-active").siblings().removeClass("li-active");
         })
 
         $(".dots ul li").click(function() {
@@ -202,7 +205,7 @@ window.onload = function() {
             $(this).parents(".dots").prev().find("ul").animate({
                 marginLeft: [-256 * cindex, "swing"]
             }, 500);
-            changeIndex();
+            $(this).addClass("li-active").siblings().removeClass("li-active");
         })
 
         function changeIndex() {

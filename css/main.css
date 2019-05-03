@@ -647,7 +647,7 @@ body {
 }
 
 .first-floor .slider .slider-ctl .dots a:hover,
-.first-floor .slider .slider-ctl .dots .selected {
+.first-floor .slider .slider-ctl .dots a.selected {
     border-color: rgba(0, 0, 0, .4);
     background: rgba(255, 255, 255, 0.4);
 }
